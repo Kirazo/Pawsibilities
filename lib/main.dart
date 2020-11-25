@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -27,6 +30,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  var url = "https://bitbucket.org/cs481group5/doggydex/raw/dc488b55b7933a27eb9326c0780adfa6607a4d3c/doggydexx.json";
+
+
   DogHub dogHub;
 
   @override
@@ -36,6 +42,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   fetchData() async{
+    var res = await http.get(url);
+    var decodedJson = jsonDecode(res.body);
+
+    dogHub = DogHub.fromJson(decodedJson);
+    print(dogHub.toJson());
+    setState(() {
+
+    });
   }
 
   @override
@@ -45,25 +59,41 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Dogs"),
         backgroundColor: Colors.cyan,
       ),
-      body: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(10, (index){
-            return Container(
-              child: InkWell(
-                onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DogDetail(
-                    )));
-                },
-                  child: Card(
-                   color: Colors.grey,
-                    child: Text(
-                        'Item $index',
-                         style: Theme.of(context).textTheme.headline5, textAlign: TextAlign.center
-                    ),
-                   ),
+      body: dogHub == null? Center(child: CircularProgressIndicator()):
+      GridView.count(
+        crossAxisCount: 2,
+          children: dogHub.dog
+              .map((dog) => Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DogDetail(
+                  dog: dog,
+                )));
+
+              },
+              child: Hero(
+                tag: dog.image,
+                child: Card(
+                  elevation: 3.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        height: 100.0,
+                        width: 100.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(dog.image)),
+                        ),
+                      ),
+                      Text(
+                        dog.breed, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                    ]
+                  )
+                ),
               ),
-            );
-          }),
+            ),
+          )).toList(),
       ),
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
