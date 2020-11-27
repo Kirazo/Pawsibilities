@@ -26,6 +26,7 @@ class Dog {
   String breed;
   String height;
   String weight;
+  String size;
   String lifeSpan;
   List<String> furType;
   List<String> personality;
@@ -37,6 +38,7 @@ class Dog {
         this.breed,
         this.height,
         this.weight,
+        this.size,
         this.lifeSpan,
         this.furType,
         this.personality,
@@ -48,6 +50,7 @@ class Dog {
     breed = json['breed'];
     height = json['height'];
     weight = json['weight'];
+    size = json['size'];
     lifeSpan = json['life_span'];
     furType = json['fur_type'].cast<String>();
     personality = json['personality'].cast<String>();
@@ -61,6 +64,7 @@ class Dog {
     data['breed'] = this.breed;
     data['height'] = this.height;
     data['weight'] = this.weight;
+    data['size'] = this.size;
     data['life_span'] = this.lifeSpan;
     data['fur_type'] = this.furType;
     data['personality'] = this.personality;
