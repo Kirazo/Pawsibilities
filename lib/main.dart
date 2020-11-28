@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var url = "https://bitbucket.org/cs481group5/doggydex/raw/6d661cbdf44f5c624bcac8f0452c2400c512c19e/doggydexx.json";
+  var url = "https://bitbucket.org/cs481group5/doggydex/raw/e75c3c49f55fdcf63044e89d85ab512affb87483/doggydexx.json";
 
 
   DogHub dogHub;
