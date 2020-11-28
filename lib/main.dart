@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -111,3 +113,63 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class SplashScreen extends StatefulWidget{
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+  AnimationController _animationController;
+  double opacity = 0;
+
+  @override
+  void initState(){
+    _animationController= AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 1000)
+    );
+    _animationController.forward();
+    super.initState();
+    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyHomePage())));
+    changeOpacity();
+  }
+
+  changeOpacity(){
+    Future.delayed(Duration(seconds: 3), (){
+      setState(() {
+        opacity = opacity == 0.0 ? 1.0 : 1.0;
+      });
+    });
+  }
+
+  Widget build(BuildContext context) {
+      return Scaffold(
+        body: Container(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Opacity(
+                opacity: 1,
+                child: Image.asset('images/wallpaper.jpg',
+                fit: BoxFit.cover,
+                height: 800),
+              ),
+              Opacity(
+                opacity: 1,
+                child: Image.asset('images/paw2.gif'),
+              ),
+              AnimatedOpacity(
+                duration: Duration(seconds: 1),
+                opacity: opacity,
+                child: Text(
+                  'Pawsibilities',
+                  style: TextStyle(color: Colors.black, fontFamily: "Smile", fontSize: 50),
+                ),
+              )
+            ],
+          )
+        ),
+      );
+   }
+  }
