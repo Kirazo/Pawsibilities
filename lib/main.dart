@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
+import 'search.dart';
 
 
 void main() {
@@ -59,7 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text("Doggies Search", style: TextStyle(fontSize: 18, wordSpacing: 125)),
           backgroundColor: Colors.cyan,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.search), onPressed: () {})
+            IconButton(icon: Icon(Icons.search),
+                onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+                })
           ]
       ),
       body: dogHub == null? Center(child: CircularProgressIndicator()):
