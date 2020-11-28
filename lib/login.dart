@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:url_launcher/url_launcher.dart';
 import 'main.dart';
+import 'package:provider/provider.dart';
+import 'package:final_app/authentication_service.dart';
 
 
 class MyLogin extends StatefulWidget{
@@ -12,7 +14,8 @@ class MyLogin extends StatefulWidget{
 class _MyLoginPage extends State<MyLogin>{
   final _formKey = GlobalKey<FormState>();
   
-
+  String _email;
+  String _password;
 
 
   @override
@@ -54,6 +57,7 @@ class _MyLoginPage extends State<MyLogin>{
                           color: Colors.grey,
                         ),
                       ),
+                      onSaved: (value) => _email = value,
                       validator: (value){
                         if(value.isEmpty){
                           return 'Username needed!';
@@ -70,6 +74,7 @@ class _MyLoginPage extends State<MyLogin>{
                               color: Colors.grey,
                             ),
                         ),
+                      onSaved: (value) => _password = value,
                       validator: (value)
                         {
                           if(value.isEmpty){
@@ -123,9 +128,15 @@ class _MyLoginPage extends State<MyLogin>{
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            if(_formKey.currentState.validate())
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                          },
+                            final form = _formKey.currentState;
+                            form.save();
+                            if(form.validate()){
+                            context.read<AuthenticationService>().signIn(
+                              email: _email,
+                              password: _password,
+                            );
+                          }
+                            },
                           child: Center(
                             child: Text(
                               'Login',
