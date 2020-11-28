@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
 import 'search.dart';
+import 'login.dart';
 
 
 void main() {
@@ -120,18 +121,12 @@ class SplashScreen extends StatefulWidget{
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
-  AnimationController _animationController;
   double opacity = 0;
 
   @override
   void initState(){
-    _animationController= AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 1000)
-    );
-    _animationController.forward();
     super.initState();
-    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyHomePage())));
+    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyLogin())));
     changeOpacity();
   }
 
@@ -172,4 +167,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         ),
       );
    }
+
+    @override
+    dispose() {
+    //  _animationController.dispose();
+      super.dispose();
+    }
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 import 'main.dart';
 
 
@@ -29,10 +29,10 @@ class _MyLoginPage extends State<MyLogin>{
                 child: Stack(
                   children: <Widget>[
                     Container(
-                        padding: EdgeInsets.fromLTRB(40.0, 70.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(45.0, 55.0, 0.0, 0.0),
                         child: Text(
                             'Pawsibilities',
-                            style: TextStyle(fontSize: 60.0, fontWeight: FontWeight.bold)
+                            style: TextStyle(fontSize: 60.0,fontFamily: "Smile", fontWeight: FontWeight.bold)
                         )
                     ),
                     Container(
