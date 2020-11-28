@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
+import 'search.dart';
+import 'login.dart';
 
 
 void main() {
@@ -18,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -56,8 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dogs"),
-        backgroundColor: Colors.cyan,
+          title: Text("Doggies Search", style: TextStyle(fontSize: 18, wordSpacing: 125)),
+          backgroundColor: Colors.cyan,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.search),
+                onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+                })
+          ]
       ),
       body: dogHub == null? Center(child: CircularProgressIndicator()):
       GridView.count(
@@ -104,3 +114,63 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class SplashScreen extends StatefulWidget{
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+  double opacity = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyLogin())));
+    changeOpacity();
+  }
+
+  changeOpacity(){
+    Future.delayed(Duration(seconds: 3), (){
+      setState(() {
+        opacity = opacity == 0.0 ? 1.0 : 1.0;
+      });
+    });
+  }
+
+  Widget build(BuildContext context) {
+      return Scaffold(
+        body: Container(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Opacity(
+                opacity: 1,
+                child: Image.asset('images/wallpaper.jpg',
+                fit: BoxFit.cover,
+                height: 800),
+              ),
+              Opacity(
+                opacity: 1,
+                child: Image.asset('images/paw2.gif'),
+              ),
+              AnimatedOpacity(
+                duration: Duration(seconds: 1),
+                opacity: opacity,
+                child: Text(
+                  'Pawsibilities',
+                  style: TextStyle(color: Colors.black, fontFamily: "Smile", fontSize: 50),
+                ),
+              )
+            ],
+          )
+        ),
+      );
+   }
+
+    @override
+    dispose() {
+    //  _animationController.dispose();
+      super.dispose();
+    }
+  }
