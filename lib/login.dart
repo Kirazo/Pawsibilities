@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:url_launcher/url_launcher.dart';
 import 'main.dart';
 import 'package:provider/provider.dart';
 import 'package:final_app/authentication_service.dart';
+import 'signup.dart';
 
 
 class MyLogin extends StatefulWidget{
@@ -16,6 +16,7 @@ class _MyLoginPage extends State<MyLogin>{
   
   String _email;
   String _password;
+  TextEditingController emailController = new TextEditingController();
 
 
   @override
@@ -99,11 +100,13 @@ class _MyLoginPage extends State<MyLogin>{
                                   child: Text("Send"),
                                   onPressed: () {
                                     Navigator.of(context).pop();
+                                    context.read<AuthenticationService>().sendPasswordResetEmail(emailController.text);
                                   }
                                 )
                               ],
                               content: CupertinoTextField(
                                 placeholder: "Email",
+                                controller: emailController,
                               )
                             ),
                           );
@@ -126,7 +129,7 @@ class _MyLoginPage extends State<MyLogin>{
                         shadowColor: Colors.cyanAccent,
                         color: Colors.cyan,
                         elevation: 7.0,
-                        child: GestureDetector(
+                        child: InkWell(
                           onTap: () {
                             final form = _formKey.currentState;
                             form.save();
@@ -153,30 +156,47 @@ class _MyLoginPage extends State<MyLogin>{
                     Container(
                       height: 40.0,
                       color: Colors.transparent,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 1.0,
-                          ),
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(20.0)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Center(
-                              child: ImageIcon(AssetImage('assets/facebook.png')),
+                      child: InkWell(
+                        onTap: (){
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => CupertinoAlertDialog(
+                              title: Text("Coming Soon! :)"),
+                              actions:[
+                                CupertinoDialogAction(
+                                    child: Text("Close"),
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    }
+                                )
+                              ]
+                          ));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              width: 1.0,
                             ),
-                            SizedBox(width: 10.0),
-                            Center(
-                              child: Text('Login with Facebook', style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))
-                            )
-                          ]
-                        )
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Center(
+                                child: ImageIcon(AssetImage('assets/facebook.png')),
+                              ),
+                              SizedBox(width: 10.0),
+                              Center(
+                                child: Text('Login with Facebook', style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ))
+                              )
+                            ]
+                          )
+                        ),
                       )
                     )
                   ]
@@ -194,7 +214,9 @@ class _MyLoginPage extends State<MyLogin>{
                   ),
                   SizedBox(width: 5.0),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MySignUp()));
+                    },
                     child: Text(
                       'Register',
                       style: TextStyle(

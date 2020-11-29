@@ -13,12 +13,26 @@ class AuthenticationService{
     await _firebaseAuth.signOut();
   }
 
+  Future<void> sendPasswordResetEmail(String email) async{
+    return _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+
   Future<String> signIn({String email, String password}) async{
     try{
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return "Signed in";
+
     } on FirebaseAuthException catch (e){
-      return e.message;
+      var errorCode = e.code;
+      var errorMessage = e.message;
+
+      if(errorCode == 'auth/wrong-password'){
+        return ('Wrong Password.');
+      }
+      else{
+        return errorMessage;
+      }
     }
 
   }
