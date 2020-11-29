@@ -54,7 +54,7 @@ flutter:
     - images/wallpaper.jpg
     - images/paw1.gif
     - images/paw2.gif
-    - images/avatar.jpg
+    - images/avatar.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

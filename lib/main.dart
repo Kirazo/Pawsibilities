@@ -113,7 +113,14 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.cyan,
               child: DrawerHeader(
                 child: CircleAvatar(
-                    backgroundImage: AssetImage('images/avatar.jpg')
+                    radius: 10,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: Image.asset('images/avatar.png',
+                      width: 125,
+                      height: 125,
+                      fit: BoxFit.cover,)
+                    ),
                   ),
                 ),
               ),
