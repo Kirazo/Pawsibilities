@@ -85,6 +85,7 @@ class _MyLoginPage extends State<MyLogin>{
                         },
                       obscureText: true,
                     ),
+                    SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
                     SizedBox(height: 5.0),
                     Container(
                       alignment: Alignment(1.0,0.0),
