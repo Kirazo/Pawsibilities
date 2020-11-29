@@ -161,7 +161,7 @@ class _MyLoginPage extends State<MyLogin>{
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => CupertinoAlertDialog(
-                              title: Text("Coming Soon! :)"),
+                              title: Text("Please fur-give me! Coming Soon :)"),
                               actions:[
                                 CupertinoDialogAction(
                                     child: Text("Close"),
