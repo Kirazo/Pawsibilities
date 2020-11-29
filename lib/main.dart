@@ -105,7 +105,66 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )).toList(),
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Container(
+              color: Colors.cyan,
+              child: DrawerHeader(
+                child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: Image.asset('images/avatar.png',
+                      width: 125,
+                      height: 125,
+                      fit: BoxFit.cover,)
+                    ),
+                  ),
+                ),
+              ),
+            ListTile(
+              leading: Icon(Icons.search_rounded, color: Colors.deepPurple),
+              title: Text('Dog List'),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+              },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              leading: Icon(Icons.map_outlined, color: Colors.blue),
+              title: Text('Dog Parks'),
+              onTap: (){
+
+              },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              leading: Icon(Icons.favorite_outlined, color: Colors. red),
+              title: Text('Favorites'),
+              onTap: (){
+
+              },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              leading: Icon(Icons.person, color: Colors.green),
+              title: Text('Account Info'),
+              onTap: (){
+
+              },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              title: Text('Log Out'),
+              onTap: (){
+
+              },
+            ),
+          ],
+        )
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.cyan,
