@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.cyan,
               child: DrawerHeader(
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avatar.jpg'),
+                    backgroundImage: AssetImage('images/avatar.jpg')
                   ),
                 ),
               ),
@@ -144,6 +144,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(Icons.person, color: Colors.green),
               title: Text('Account Info'),
+              onTap: (){
+
+              },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              title: Text('Log Out'),
               onTap: (){
 
               },
