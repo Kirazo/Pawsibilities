@@ -1,3 +1,4 @@
+import 'package:final_app/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -7,9 +8,14 @@ import 'dogs.dart';
 import 'doginfo.dart';
 import 'search.dart';
 import 'login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-void main() {
   runApp(MyApp());
 }
 
@@ -17,13 +23,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Final',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthenticationService>().authStateChanges,
+        )
+      ],
+      child: MaterialApp(
+        title: 'Final',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget{
+
+  const AuthenticationWrapper({
+    Key key,
+}): super(key:key);
+
+  @override
+  Widget build(BuildContext context){
+    final firebaseUser = context.watch<User>();
+
+    if(firebaseUser != null){
+      return MyHomePage();
+    }
+    return MyLogin();
   }
 }
 
@@ -166,7 +199,9 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.read<AuthenticationService>().signOut();
+        },
         backgroundColor: Colors.cyan,
         child: Icon(Icons.refresh),
       ),
@@ -185,7 +220,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState(){
     super.initState();
-    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MyLogin())));
+    Timer(Duration(seconds: 5), ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AuthenticationWrapper())));
     changeOpacity();
   }
 
