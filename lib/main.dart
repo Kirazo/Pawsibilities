@@ -192,18 +192,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Log Out'),
               onTap: (){
-
+                context.read<AuthenticationService>().signOut();
               },
             ),
           ],
-        )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<AuthenticationService>().signOut();
-        },
-        backgroundColor: Colors.cyan,
-        child: Icon(Icons.refresh),
+        ),
       ),
     );
   }
