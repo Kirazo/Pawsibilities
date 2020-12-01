@@ -4,8 +4,9 @@
 // CS 481 Final Project
 // Pawsibilities: Must login with test@gmail.com 123456 or create an account
 //  In app list of dog breeds are shown in a gridlist. Dog breed can be selected
-//  to view information on the breed. Filter search can be used to filter dogs based
-//  on traits. In menu, dog parks shows dog parks in San Marcos area. Account info
+//  to view information on the breed. In menu, Dog Parks shows dog parks in San Marcos area.
+//  Adoption shows information about adoption. At the end of the slides the user
+//  can click the link to view adoption centers near san marcos. Account info
 //  shows user info that can be edited.
 //
 // Known bugs: must restart app to create an account
@@ -21,7 +22,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
-import 'filter.dart';
 import 'login.dart';
 import 'Adoption.dart';
 import 'package:firebase_core/firebase_core.dart';

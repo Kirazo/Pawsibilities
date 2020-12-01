@@ -1,3 +1,4 @@
+import 'package:final_app/adoptmap.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -51,9 +52,9 @@ class _Adopt extends State<Adopt> {
             backgroundColor: Colors.cyan,
          ),
           body: IntroductionScreen(
-            done: Text('Return', style: TextStyle(color: Colors.black)),
+            done: Text('View Adoption Centers', style: TextStyle(color: Colors.black)),
           onDone: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AdoptMap()));
           },
         pages: getPages(),
         ),

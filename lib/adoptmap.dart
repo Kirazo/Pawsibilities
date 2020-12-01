@@ -73,6 +73,7 @@ class _AdoptMapState extends State<AdoptMap> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Adopt Nearby"),
+
       ),
       body: GoogleMap(
         markers: Set.from(
