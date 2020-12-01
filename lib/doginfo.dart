@@ -9,13 +9,12 @@ DogDetail({this.dog});
 
 
 bodyWidget(BuildContext context) => Stack(
-  children: <Widget>[
+    children: <Widget>[
     Positioned(
       height: MediaQuery.of(context).size.height/1.5,
       width: MediaQuery.of(context).size.width - 20,
       left: 10.0,
       top: MediaQuery.of(context).size.height * 0.1,
-
       child: Card(
         shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -26,7 +25,6 @@ bodyWidget(BuildContext context) => Stack(
             SizedBox(
               height: 30.0,
             ),
-
             Text(dog.breed, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
             Text("Height: ${dog.height}"),
             Text("Weight: ${dog.weight}"),

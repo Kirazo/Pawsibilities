@@ -8,9 +8,11 @@ import 'dogs.dart';
 import 'doginfo.dart';
 import 'search.dart';
 import 'login.dart';
+import 'Adoption.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,14 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Doggies Search", style: TextStyle(fontSize: 18, wordSpacing: 125)),
+          title: Text("Doggies", style: TextStyle(fontSize: 18, wordSpacing: 125)),
           backgroundColor: Colors.cyan,
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.search),
-                onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
-                })
-          ]
       ),
       body: dogHub == null? Center(child: CircularProgressIndicator()):
       GridView.count(
@@ -175,9 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Divider(color: Colors.black),
             ListTile(
               leading: Icon(Icons.favorite_outlined, color: Colors. red),
-              title: Text('Favorites'),
+              title: Text('Adoption'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Adopt()));
               },
             ),
             Divider(color: Colors.black),
