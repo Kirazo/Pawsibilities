@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
-import 'search.dart';
+import 'filter.dart';
 import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -93,12 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Doggies Search", style: TextStyle(fontSize: 18, wordSpacing: 125)),
+          title: Text("Doggies Filter", style: TextStyle(fontSize: 18, wordSpacing: 140)),
           backgroundColor: Colors.cyan,
           actions: <Widget>[
             IconButton(icon: Icon(Icons.search),
                 onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
+              showSearch(context: context, delegate: DataFilter());
                 })
           ]
       ),
@@ -158,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ListTile(
-              leading: Icon(Icons.search_rounded, color: Colors.deepPurple),
+              leading: Icon(Icons.search, color: Colors.deepPurple),
               title: Text('Dog List'),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
@@ -166,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Divider(color: Colors.black),
             ListTile(
-              leading: Icon(Icons.map_outlined, color: Colors.blue),
+              leading: Icon(Icons.map, color: Colors.blue),
               title: Text('Dog Parks'),
               onTap: (){
 
@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Divider(color: Colors.black),
             ListTile(
-              leading: Icon(Icons.favorite_outlined, color: Colors. red),
+              leading: Icon(Icons.favorite, color: Colors. red),
               title: Text('Favorites'),
               onTap: (){
 
