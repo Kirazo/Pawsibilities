@@ -30,6 +30,7 @@ bodyWidget(BuildContext context) => Stack(
             Text(dog.breed, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
             Text("Height: ${dog.height}"),
             Text("Weight: ${dog.weight}"),
+            Text("Size: ${dog.size}"),
             Text("Colors", style: TextStyle(fontWeight: FontWeight.bold)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
