@@ -8,6 +8,7 @@ import 'dogs.dart';
 import 'doginfo.dart';
 import 'filter.dart';
 import 'login.dart';
+import 'parkmap.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -169,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.map, color: Colors.blue),
               title: Text('Dog Parks'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ParkMap()));
               },
             ),
             Divider(color: Colors.black),
