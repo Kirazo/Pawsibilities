@@ -72,6 +72,12 @@ class _changeInfo  extends State<changeInfo > {
                       ),
                       Divider(),
 
+                      Container(
+                        child: Text("Please click the check button after every input!",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
+                      ),
+                      Divider(),
+
                       Expanded(
                           child: Align(
                               alignment: FractionalOffset.bottomCenter,
