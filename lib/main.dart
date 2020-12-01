@@ -1,3 +1,18 @@
+//
+// Group 5: CJ Trujillo, Ian Altoveros, Gintas Kazlauskas, Howard Tep
+// 11/30/20
+// CS 481 Final Project
+// Pawsibilities: Must login with test@gmail.com 123456 or create an account
+//  In app list of dog breeds are shown in a gridlist. Dog breed can be selected
+//  to view information on the breed. Filter search can be used to filter dogs based
+//  on traits. In menu, dog parks shows dog parks in San Marcos area. Account info
+//  shows user info that can be edited.
+//
+// Known bugs: must restart app to create an account
+//     forgot password works but may be slo
+//     to edit account information must select checkmark in keyboard for text to go through
+//
+// Citation: api.flutter.dev
 import 'package:final_app/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
