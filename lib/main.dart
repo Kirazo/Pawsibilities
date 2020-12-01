@@ -23,6 +23,11 @@ import 'dogs.dart';
 import 'doginfo.dart';
 import 'filter.dart';
 import 'login.dart';
+import 'Adoption.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'parkmap.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -110,14 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Doggies Filter", style: TextStyle(fontSize: 18, wordSpacing: 140)),
+          title: Text("Doggies", style: TextStyle(fontSize: 18, wordSpacing: 125)),
           backgroundColor: Colors.cyan,
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.search),
-                onPressed: () {
-              showSearch(context: context, delegate: DataFilter());
-                })
-          ]
       ),
       body: dogHub == null? Center(child: CircularProgressIndicator()):
       GridView.count(
@@ -191,10 +190,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Divider(color: Colors.black),
             ListTile(
-              leading: Icon(Icons.favorite, color: Colors. red),
-              title: Text('Favorites'),
+              leading: Icon(Icons.favorite_outlined, color: Colors. red),
+              title: Text('Adoption'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Adopt()));
               },
             ),
             Divider(color: Colors.black),

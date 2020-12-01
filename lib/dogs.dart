@@ -32,6 +32,7 @@ class Dog {
   List<String> personality;
   String image;
   List<String> color;
+  bool favorite;
 
   Dog(
       {this.id,
@@ -43,7 +44,9 @@ class Dog {
         this.furType,
         this.personality,
         this.image,
-        this.color});
+        this.color,
+        this.favorite,
+      });
 
   Dog.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,6 +59,7 @@ class Dog {
     personality = json['personality'].cast<String>();
     image = json['image'];
     color = json['color'].cast<String>();
+    favorite = json['favorite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +74,7 @@ class Dog {
     data['personality'] = this.personality;
     data['image'] = this.image;
     data['color'] = this.color;
+    data['favotire'] = this.favorite;
     return data;
   }
 }
