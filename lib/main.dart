@@ -1,3 +1,18 @@
+//
+// Group 5: CJ Trujillo, Ian Altoveros, Gintas Kazlauskas, Howard Tep
+// 11/30/20
+// CS 481 Final Project
+// Pawsibilities: Must login with test@gmail.com 123456 or create an account
+//  In app list of dog breeds are shown in a gridlist. Dog breed can be selected
+//  to view information on the breed. Filter search can be used to filter dogs based
+//  on traits. In menu, dog parks shows dog parks in San Marcos area. Account info
+//  shows user info that can be edited.
+//
+// Known bugs: must restart app to create an account
+//     forgot password works but may be slo
+//     to edit account information must select checkmark in keyboard for text to go through
+//
+// Citation: api.flutter.dev
 import 'package:final_app/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +21,18 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dogs.dart';
 import 'doginfo.dart';
-import 'search.dart';
+import 'filter.dart';
 import 'login.dart';
 import 'Adoption.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'parkmap.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'userInfo.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -154,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ListTile(
-              leading: Icon(Icons.search_rounded, color: Colors.deepPurple),
+              leading: Icon(Icons.search, color: Colors.deepPurple),
               title: Text('Dog List'),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
@@ -162,10 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Divider(color: Colors.black),
             ListTile(
-              leading: Icon(Icons.map_outlined, color: Colors.blue),
+              leading: Icon(Icons.map, color: Colors.blue),
               title: Text('Dog Parks'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ParkMap()));
               },
             ),
             Divider(color: Colors.black),
@@ -181,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.person, color: Colors.green),
               title: Text('Account Info'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => personalInfo()));
               },
             ),
             Divider(color: Colors.black),
