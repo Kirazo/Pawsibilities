@@ -2,10 +2,15 @@
   GoogleMaps API:
     https://codelabs.developers.google.com/codelabs/google-maps-in-flutter#2
     https://medium.com/@rajesh.muthyala/flutter-with-google-maps-and-google-place-85ccee3f0371
+    https://developers.google.com/places/web-service/search
+    https://stackoverflow.com/questions/56208104/get-marker-from-json-file-and-show-on-googlemap
 */
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 
 class ParkMap extends StatefulWidget {
@@ -14,89 +19,68 @@ class ParkMap extends StatefulWidget {
 }
 
 class _ParkMapState extends State<ParkMap> {
-  GoogleMapController mapController;
-  final LatLng _center = const LatLng(33.12943764422752, -117.15951705599333);  //centered on csusm
-  //LatLng _lastMapPosition;
-  final Set<Marker> _markers = {
-    Marker(
-      markerId: MarkerId("Hollandia Park"),
-      position: LatLng(33.1476584310334, -117.144979483178),
-      infoWindow: InfoWindow(title: "Hollandia Park", snippet: '12 Mission Hills Ct, San Marcos'),
-      icon: BitmapDescriptor.defaultMarker,
-    ),
-    Marker(
-      markerId: MarkerId("San Elijo Hills Dog Park"),
-      position: LatLng(33.10229656561592, -117.20046508521827),
-      infoWindow: InfoWindow(title: "San Elijo Hills Dog Park", snippet: 'San Elijo Rd N, San Marcos'),
-      icon: BitmapDescriptor.defaultMarker,
-    ),
-    Marker(
-      markerId: MarkerId("Montiel Park"),
-      position: LatLng(33.13201245341753, -117.11416657726762),
-      infoWindow: InfoWindow(title: "Montiel Park", snippet: '2290 Montiel Rd, San Marcos'),
-      icon: BitmapDescriptor.defaultMarker,
-    ),
-    Marker(
-      markerId: MarkerId("Lakeview Park"),
-      position: LatLng(33.12471195697568, -117.17867980056019),
-      infoWindow: InfoWindow(title: "Lakeview Park", snippet: '650 Foxhall Dr, San Marcos'),
-      icon: BitmapDescriptor.defaultMarker,
-    ),
-  };
+  LatLng latlng = LatLng(
+      33.132359919628875,
+      -117.15980678154757
+  );
+  Iterable markers = [];
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  @override
+  void initState() {
+    super.initState();
+
+    getData();
   }
 
-/*  void _onCameraMove(CameraPosition position){
-    _lastMapPosition = _center;
-    _lastMapPosition = position.target;
-  }*/
+  getData() async {
+    try {
+      final response =
+      await http.get('https://maps.googleapis.com/maps/api/place/textsearch/json?query=dog+park&location=33.1284381,-117.1578434&radius=10000&key=AIzaSyCea__1_lg7NhgchuV5YERTKpPN0s0x8Ew');
 
-/*  void _onAddMakerButtonPressed(){
-    setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId(_lastMapPosition.toString()),
-        position: _lastMapPosition,
-        infoWindow: InfoWindow(
-          title: 'Really cool place',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-  }*/
+      final int statusCode = response.statusCode;
 
+      if (statusCode == 201 || statusCode == 200) {
+        Map responseBody = json.decode(response.body);
+        List results = responseBody["results"];
+
+        Iterable _markers = Iterable.generate(10, (index) {
+          Map result = results[index];
+          Map location = result["geometry"]["location"];
+          LatLng latLngMarker = LatLng(location["lat"], location["lng"]);
+          String name = result["name"].toString();
+          String address = result["formatted_address"].toString();
+
+          return Marker(
+            markerId: MarkerId("marker$index"),
+            position: latLngMarker,
+            infoWindow: InfoWindow(title: name, snippet: address),
+          );
+        });
+
+        setState(() {
+          markers = _markers;
+        });
+      } else {
+        throw Exception('Error');
+      }
+    } catch(e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Dog Parks in San Marcos'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Dog Parks Nearby"),
+      ),
+      body: GoogleMap(
+        markers: Set.from(
+          markers,
         ),
-        body: Stack(
-          children: <Widget>[
-            GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 11.0,
-              ),
-              //onCameraMove: _onCameraMove,
-              markers: _markers,
-            ),
-            /*Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: FloatingActionButton(
-                  onPressed: () => _onAddMakerButtonPressed(),
-                  child: Icon(Icons.map),
-                ),
-              ),
-            )*/
-          ],
-        )
+        initialCameraPosition: CameraPosition(target: latlng, zoom: 11.0),
+        mapType: MapType.normal,
+        onMapCreated: (GoogleMapController controller) {},
       ),
     );
   }
