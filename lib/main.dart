@@ -11,6 +11,7 @@ import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'userInfo.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -185,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.person, color: Colors.green),
               title: Text('Account Info'),
               onTap: (){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => personalInfo()));
               },
             ),
             Divider(color: Colors.black),
